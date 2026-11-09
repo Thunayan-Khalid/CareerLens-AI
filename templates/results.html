@@ -1,0 +1,142 @@
+
+{% extends "base.html" %}
+
+{% block title %}Career Analysis Report — CareerLens AI{% endblock %}
+
+{% block content %}
+
+<div class="page-top">
+    <div>
+        <div class="eyebrow">CAREER ANALYSIS REPORT · #{{ analysis_id }}</div>
+        <h1>Your career <span>assessment.</span></h1>
+        <p class="muted">{{ filename }}</p>
+    </div>
+    <a class="ghost-btn" href="{{ url_for('index') }}">Start new analysis ↗</a>
+</div>
+
+<section class="results-grid">
+
+    <div class="panel score-panel">
+        <div class="step">CAREER FIT SCORE</div>
+
+        <div class="score-ring" style="--score: {{ result.score }}%">
+            <div>
+                <strong>{{ result.score }}<small>%</small></strong>
+                <span>{{ result.level }}</span>
+            </div>
+        </div>
+
+        <p class="muted centered">Indicative career fit assessment</p>
+
+        <div class="mini-stats">
+            <div>
+                <b>{{ result.skill_coverage }}%</b>
+                <span>Skill coverage</span>
+            </div>
+            <div>
+                <b>{{ result.text_similarity }}%</b>
+                <span>Text similarity</span>
+            </div>
+        </div>
+
+        {% if result.score_note is defined and result.score_note %}
+            <p class="muted">{{ result.score_note }}</p>
+        {% endif %}
+    </div>
+
+    <div class="panel overview-panel">
+        <div class="step">SKILL OVERVIEW</div>
+        <h2>Where you stand</h2>
+
+        <div class="overview-row">
+            <span>Relevant skills</span>
+            <b class="green">{{ result.matched_skills|length }}</b>
+        </div>
+
+        <div class="bar">
+            <i style="width: {{ result.skill_coverage }}%"></i>
+        </div>
+
+        <div class="overview-row">
+            <span>Skill gaps</span>
+            <b class="orange">{{ result.missing_skills|length }}</b>
+        </div>
+
+        <div class="overview-row">
+            <span>Skills in resume</span>
+            <b>{{ result.resume_skill_count }}</b>
+        </div>
+
+        <div class="overview-row">
+            <span>Skills in job description</span>
+            <b>{{ result.job_skill_count }}</b>
+        </div>
+    </div>
+
+</section>
+
+<section class="detail-grid">
+
+    <div class="panel">
+        <div class="section-heading">
+            <h2>Relevant skills</h2>
+            <span class="tag tag-green">Relevant strengths</span>
+        </div>
+
+        {% if result.matched_skills %}
+            <div class="chips">
+                {% for skill in result.matched_skills %}
+                    <span class="chip chip-green">{{ skill }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="muted">
+                No matching skills were detected in the resume.
+            </p>
+        {% endif %}
+    </div>
+
+    <div class="panel">
+        <div class="section-heading">
+            <h2>Skill gaps</h2>
+            <span class="tag tag-orange">Development priorities</span>
+        </div>
+
+        {% if result.missing_skills %}
+            <div class="chips">
+                {% for skill in result.missing_skills %}
+                    <span class="chip chip-orange">{{ skill }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="muted">
+                No missing skills from the supported skill list were detected.
+            </p>
+        {% endif %}
+    </div>
+
+</section>
+
+<section class="panel recommendations">
+
+    <div class="step">NEXT STEPS</div>
+    <h2>Career development plan</h2>
+
+    {% if result.recommendations %}
+        {% for item in result.recommendations %}
+            <div class="recommendation">
+                <span>↗</span>
+                {{ item }}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="muted">
+            No specific recommendations are available for this analysis.
+        </p>
+    {% endif %}
+
+    <p class="disclaimer">{{ result.disclaimer }}</p>
+
+</section>
+
+{% endblock %}

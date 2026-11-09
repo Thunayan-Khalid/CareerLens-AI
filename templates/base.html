@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="CareerLens AI analyzes resumes against job descriptions, identifies relevant skills, and highlights career development opportunities.">
+
+    <meta name="theme-color" content="#0b1220">
+
+    <title>{% block title %}CareerLens AI{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <nav class="nav">
+        <a class="brand" href="{{ url_for('index') }}" aria-label="CareerLens AI Home">
+            <span class="brand-mark">C</span>
+            Career<span>Lens AI</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Career Analyzer</a>
+            <a href="{{ url_for('history') }}">History</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-list" role="alert">
+                    {% for message in messages %}
+                        <div class="flash">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+    </main>
+
+    <footer>
+        CareerLens AI · Intelligent Career Analysis
+        <span>Built with Python, Flask, and NLP · © 2026</span>
+    </footer>
+
+</body>
+</html>

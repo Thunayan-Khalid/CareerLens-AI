@@ -1,0 +1,91 @@
+
+{% extends "base.html" %}
+
+{% block title %}Analysis History — CareerLens AI{% endblock %}
+
+{% block content %}
+
+<div class="page-top">
+    <div>
+        <div class="eyebrow">YOUR WORKSPACE</div>
+        <h1>Career analysis <span>history.</span></h1>
+        <p class="muted">
+            Review your previous resume analyses saved on this device.
+        </p>
+    </div>
+
+    <a class="ghost-btn" href="{{ url_for('index') }}">
+        Start new analysis ↗
+    </a>
+</div>
+
+<div class="panel table-panel">
+
+    {% if records %}
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Resume</th>
+                        <th>Career fit score</th>
+                        <th>Relevant skills</th>
+                        <th>Skill gaps</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in records %}
+                        <tr>
+                            <td>{{ row.filename }}</td>
+
+                            <td>
+                                <b class="
+                                    {% if row.score >= 75 %}
+                                        green
+                                    {% elif row.score >= 45 %}
+                                        orange
+                                    {% endif %}
+                                ">
+                                    {{ row.score }}%
+                                </b>
+                            </td>
+
+                            <td>{{ row.matched_count }}</td>
+
+                            <td>{{ row.missing_count }}</td>
+
+                            <td class="history-date">
+                                {{ row.created_at }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <p class="muted history-note">
+            Your analysis history is stored locally in the application database.
+        </p>
+
+    {% else %}
+
+        <div class="empty">
+            <div>◷</div>
+            <h2>No analyses yet</h2>
+
+            <p>
+                Your completed career analysis reports will appear here.
+            </p>
+
+            <a class="primary-btn inline-btn" href="{{ url_for('index') }}">
+                Analyze a resume →
+            </a>
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

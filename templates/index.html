@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}CareerLens AI — Career Profile Analyzer{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="eyebrow"><span class="pulse"></span> AI-POWERED CAREER ANALYSIS</div>
+  <h1>Discover your <span>career potential.</span></h1>
+  <p class="hero-copy">Evaluate your resume against a job description. Identify relevant skills, uncover development areas, and build a stronger application.</p>
+</section>
+<section class="workspace">
+  <div class="panel form-panel">
+    <div class="panel-heading"><div><div class="step">01 / UPLOAD</div><h2>Your professional profile</h2></div><span class="icon">↥</span></div>
+    <form action="{{ url_for('analyze') }}" method="POST" enctype="multipart/form-data" id="analyzeForm">
+      <label class="upload-zone" for="resume">
+        <div class="upload-icon">PDF</div>
+        <strong id="fileName">Drop your resume here</strong>
+        <span>or click to browse · PDF up to 5 MB</span>
+        <input type="file" name="resume" id="resume" accept=".pdf,application/pdf" required>
+      </label>
+      <div class="field-label">02 / TARGET ROLE</div>
+      <label class="sr-only" for="job_description">Job description</label>
+      <textarea name="job_description" id="job_description" rows="10" required placeholder="Paste the job description here...
+
+Example:
+We are looking for a Python Developer with experience in Flask, SQL, REST APIs, Git, and software testing. Strong problem-solving and communication skills are required."></textarea>
+      <button class="primary-btn" type="submit">Analyze career fit <span>→</span></button>
+    </form>
+    <p class="privacy-note">🔒 Your professional profile is processed in memory and is not saved as a file.</p>
+  </div>
+  <aside class="side-column">
+    <div class="panel how-panel">
+      <div class="step">HOW IT WORKS</div><h2>A clearer view of your career fit.</h2>
+      <div class="how-item"><span>1</span><div><b>Upload</b><small>Share your resume as a PDF.</small></div></div>
+      <div class="how-item"><span>2</span><div><b>Compare</b><small>Language processing compares your profile with role requirements.</small></div></div>
+      <div class="how-item"><span>3</span><div><b>Improve</b><small>Review your career fit score and priority skill gaps.</small></div></div>
+    </div>
+    <div class="panel insight-panel">
+      <div class="insight-symbol">✳</div><h3>Make your next application stronger</h3>
+      <p>Understand what a role asks for before you apply. Use the analysis as guidance, not as a hiring decision.</p>
+    </div>
+  </aside>
+</section>
+<script>
+document.getElementById('resume').addEventListener('change', function() {
+  document.getElementById('fileName').textContent = this.files.length ? this.files[0].name : 'Drop your resume here';
+});
+document.getElementById('analyzeForm').addEventListener('submit', function() {
+  const button = this.querySelector('button');
+  button.innerHTML = 'Analyzing profile… <span>◌</span>';
+  button.disabled = true;
+});
+</script>
+{% endblock %}
