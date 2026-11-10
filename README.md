@@ -151,3 +151,16 @@ Skill extraction uses a predefined vocabulary and aliases. It may not identify e
 ## Author
 
 Developed as a portfolio project to demonstrate skills in Python, Flask, NLP, PDF processing, database integration, and web application development.
+## Screenshots
+
+### Desktop Homepage
+![Desktop Homepage](Screenshots/homepage-desktop.png)
+
+### Mobile Homepage
+![Mobile Homepage](Screenshots/homepage-mobile.png)
+
+### Analysis Results
+![Analysis Results](Screenshots/analysis-results.png)
+
+### Analysis History
+![Analysis History](Screenshots/history.png)
